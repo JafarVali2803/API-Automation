@@ -1,4 +1,6 @@
 import io.restassured.http.ContentType;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,9 +16,11 @@ public class Sample {
         //BDD syntax
         given()
                 .when()
-                      .get("https://gorest.co.in/public/v2/users")
+                      .get("https://gorest.co.in/public/v1/users")
                 .then()
                         .statusCode(200)
+                .body("data",Matchers.hasSize(10))
+                .body("data",Matchers.hasItem(Matchers.hasEntry("gender","male")))
                         .log().body();
     }
    @Test
@@ -28,15 +32,18 @@ public class Sample {
                .body("{\n" +
                        "    \"name\": \"Tenawerdbnfxgldi Ramakrishna\",\n" +
                        "    \"gender\": \"male\",\n" +
-                       "    \"email\": \"tenhgcgjghali.ramakrifshnda@15ce.com\",\n" +
+                       "    \"email\": \"tenali.ramakrishna0971@gmail.com\",\n" +
                        "    \"status\": \"active\"\n" +
                        "}")
                .when()
                    .post("https://gorest.co.in/public/v2/users")
 
                 .then()
-                   .statusCode(201)
-                   .log().body();
-   }
+                .statusCode(201)
+                .body("id",Matchers.notNullValue())
+                .body("email",Matchers.equalTo("tenali.ramakrishna0971@gmail.com"))
+                .log().body();
 
+
+}
 }
