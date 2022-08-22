@@ -1,5 +1,6 @@
 package Users;
 
+import Users.Create.UsersCreateBodyObject;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -7,7 +8,7 @@ import static io.restassured.RestAssured.given;
 
 public class CreateUsersRequest {
 
-    public static Response CreateUser(String body) {
+    public static Response CreateUser(UsersCreateBodyObject body) {
         return
                 given()
                      .accept(ContentType.JSON)

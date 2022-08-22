@@ -1,3 +1,4 @@
+import Users.Create.UsersCreateBodyObject;
 import Users.CreateUsersRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -21,15 +22,14 @@ public class CreateUsers {
 
         //Arrange
        String email = String.format("%s@gmail.com",UUID.randomUUID());
-        String requestBody = String.format("{\n" +
-                "    \"name\": \"Tenali Ramakrishna2\",\n" +
-                "    \"gender\": \"male\",\n" +
-                "    \"email\": \"%s\",\n" +
-                "    \"status\": \"active\"\n" +
-                "}",email);
+       String name = "Tenali Ramakrishna2";
+       String gender = "male";
+       String status = "active";
+
+      UsersCreateBodyObject requestBodyOb =  new UsersCreateBodyObject(name, gender,email, status);
 
         //Act
-        createUsersRequest.CreateUser(requestBody)
+        createUsersRequest.CreateUser(requestBodyOb)
                 .then()
                 //Assert
                      .statusCode(201)
@@ -42,13 +42,12 @@ public class CreateUsers {
     public void shouldCreateFemaleUser() {
 
         String email = String.format("%s@gmail.com",UUID.randomUUID());
-        String requestBody = String.format("{\n" +
-                "    \"name\": \"Riya1\",\n" +
-                "    \"gender\": \"female\",\n" +
-                "    \"email\": \"%s\",\n" +
-                "    \"status\": \"active\"\n" +
-                "}",email);
-        createUsersRequest.CreateUser(requestBody)
+        String name = "Riya1";
+        String gender = "female";
+        String status = "active";
+
+        UsersCreateBodyObject requestBodyOb =  new UsersCreateBodyObject(name, gender,email, status);
+        createUsersRequest.CreateUser(requestBodyOb)
 
                 .then()
                      .statusCode(201)
