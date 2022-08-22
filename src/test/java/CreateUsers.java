@@ -22,19 +22,16 @@ public class CreateUsers {
 
         //Arrange
        String email = String.format("%s@gmail.com",UUID.randomUUID());
-       String name = "Tenali Ramakrishna2";
-       String gender = "male";
-       String status = "active";
 
-      UsersCreateBodyObject requestBodyOb =  new UsersCreateBodyObject(name, gender,email, status);
-
+        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
+                .gender("male").email(email).status("active").build();
         //Act
         createUsersRequest.CreateUser(requestBodyOb)
                 .then()
                 //Assert
                      .statusCode(201)
                      .body("data.id", Matchers.notNullValue())
-                     .body("data.name",Matchers.equalTo("Tenali Ramakrishna2"))
+                     .body("data.name",Matchers.equalTo("Tenali RamaKrishna"))
                      .body("data.email",Matchers.equalTo(email))
                      .log().body();
     }
@@ -42,17 +39,15 @@ public class CreateUsers {
     public void shouldCreateFemaleUser() {
 
         String email = String.format("%s@gmail.com",UUID.randomUUID());
-        String name = "Riya1";
-        String gender = "female";
-        String status = "active";
 
-        UsersCreateBodyObject requestBodyOb =  new UsersCreateBodyObject(name, gender,email, status);
+        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
+                .gender("female").email(email).status("active").build();
         createUsersRequest.CreateUser(requestBodyOb)
 
                 .then()
                      .statusCode(201)
                      .body("data.id", Matchers.notNullValue())
-                     .body("data.name", Matchers.equalTo("Riya1"))
+                     .body("data.name", Matchers.equalTo("Riya"))
                      .body("data.email", Matchers.equalTo(email))
                      .log().body();
     }
