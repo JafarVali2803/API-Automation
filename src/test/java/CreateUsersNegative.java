@@ -18,10 +18,10 @@ public class CreateUsersNegative {
         UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
                 .gender("female").email("riya.28.com").status("active").build();
         //Act
-       createUsersRequest.CreateUser(requestBodyOb)
-                .then()
-                     .log().body()
+       createUsersRequest.create(requestBodyOb)
+
                 //Assert
+               .then()
                      .statusCode(422)
                      .body("data", Matchers.hasItem(Matchers.hasEntry("message","is invalid")));
     }

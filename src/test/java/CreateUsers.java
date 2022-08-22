@@ -1,8 +1,10 @@
+import Users.Create.Response.CreateUserResponse;
 import Users.Create.UsersCreateBodyObject;
 import Users.CreateUsersRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,14 +28,13 @@ public class CreateUsers {
         UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
                 .gender("male").email(email).status("active").build();
         //Act
-        createUsersRequest.CreateUser(requestBodyOb)
-                .then()
+       CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
                 //Assert
-                     .statusCode(201)
-                     .body("data.id", Matchers.notNullValue())
-                     .body("data.name",Matchers.equalTo("Tenali RamaKrishna"))
-                     .body("data.email",Matchers.equalTo(email))
-                     .log().body();
+
+        Assert.assertEquals(createUserResponse.getStatusCode(), 201);
+        Assert.assertNotNull(createUserResponse.getData().getId());
+        Assert.assertEquals(createUserResponse.getData().getEmail(),requestBodyOb.getEmail());
+
     }
     @Test
     public void shouldCreateFemaleUser() {
@@ -42,13 +43,11 @@ public class CreateUsers {
 
         UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
                 .gender("female").email(email).status("active").build();
-        createUsersRequest.CreateUser(requestBodyOb)
+        CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
 
-                .then()
-                     .statusCode(201)
-                     .body("data.id", Matchers.notNullValue())
-                     .body("data.name", Matchers.equalTo("Riya"))
-                     .body("data.email", Matchers.equalTo(email))
-                     .log().body();
+        Assert.assertEquals(createUserResponse.getStatusCode(), 201);
+        Assert.assertNotNull(createUserResponse.getData().getId());
+        Assert.assertEquals(createUserResponse.getData().getEmail(),requestBodyOb.getEmail());
+
     }
 }
