@@ -29,12 +29,9 @@ public class CreateUsers {
                 .gender("male").email(email).status("active").build();
         //Act
        CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
+
                 //Assert
-
-        Assert.assertEquals(createUserResponse.getStatusCode(), 201);
-        Assert.assertNotNull(createUserResponse.getData().getId());
-        Assert.assertEquals(createUserResponse.getData().getEmail(),requestBodyOb.getEmail());
-
+        createUserResponse.assertUser(requestBodyOb);
     }
     @Test
     public void shouldCreateFemaleUser() {
@@ -44,10 +41,7 @@ public class CreateUsers {
         UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
                 .gender("female").email(email).status("active").build();
         CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
-
-        Assert.assertEquals(createUserResponse.getStatusCode(), 201);
-        Assert.assertNotNull(createUserResponse.getData().getId());
-        Assert.assertEquals(createUserResponse.getData().getEmail(),requestBodyOb.getEmail());
+        createUserResponse.assertUser(requestBodyOb);
 
     }
 }
