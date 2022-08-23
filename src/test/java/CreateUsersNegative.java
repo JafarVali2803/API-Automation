@@ -1,8 +1,12 @@
+import Users.Create.Response.CreateUserErrorResponse;
 import Users.Create.UsersCreateBodyObject;
 import Users.CreateUsersRequest;
 import org.hamcrest.Matchers;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
 
 public class CreateUsersNegative {
 
@@ -18,11 +22,26 @@ public class CreateUsersNegative {
         UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
                 .gender("female").email("riya.28.com").status("active").build();
         //Act
-       createUsersRequest.create(requestBodyOb)
+      CreateUserErrorResponse errorResponse = createUsersRequest.createUserExpectingError(requestBodyOb);
 
                 //Assert
-               .then()
-                     .statusCode(422)
-                     .body("data", Matchers.hasItem(Matchers.hasEntry("message","is invalid")));
+        assertEquals(errorResponse.getStatusCode(), 422);
+        errorResponse.assertHasError("email", "is invalid");
+
+    }
+
+    @Test
+    public void shouldNotAllowUserToCreateWithBlankGenderAndStatus(){
+        //Arrange
+        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
+                .gender("").email("riya2.28@gmail.com").status("").build();
+        //Act
+        CreateUserErrorResponse errorResponse = createUsersRequest.createUserExpectingError(requestBodyOb);
+
+        //Assert
+        assertEquals(errorResponse.getStatusCode(), 422);
+        errorResponse.assertHasError("gender", "can't be blank, can be male or female");
+        errorResponse.assertHasError("status", "can't be blank");
+
     }
 }

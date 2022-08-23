@@ -1,5 +1,6 @@
 package Users;
 
+import Users.Create.Response.CreateUserErrorResponse;
 import Users.Create.Response.CreateUserResponse;
 import Users.Create.UsersCreateBodyObject;
 import io.restassured.http.ContentType;
@@ -14,6 +15,13 @@ public class CreateUsersRequest {
        CreateUserResponse createUserResponse = response.as(CreateUserResponse.class);
        createUserResponse.setStatusCode(response.statusCode());
         return createUserResponse;
+    }
+
+    public CreateUserErrorResponse createUserExpectingError(UsersCreateBodyObject body){
+        Response response = create(body);
+      CreateUserErrorResponse errorResponse = response.as(CreateUserErrorResponse.class);
+        errorResponse.setStatusCode(response.statusCode());
+        return errorResponse;
     }
 
    public static Response create(UsersCreateBodyObject body) {
