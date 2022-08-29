@@ -3,9 +3,11 @@ package Users;
 import Users.Create.Response.CreateUserErrorResponse;
 import Users.Create.Response.CreateUserResponse;
 import Users.Create.UsersCreateBodyObject;
+import Users.get.GetUserResponse;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 
 public class CreateUsersRequest {
@@ -46,5 +48,21 @@ public class CreateUsersRequest {
                 given()
                         .when()
                         .get("https://gorest.co.in/public/v1/users");
+    }
+
+    public static GetUserResponse getUser(int id){
+        Response response =
+                given()
+                .pathParam("id", id)
+                .when()
+                .get("https://gorest.co.in/public/v1/users/{id}");
+        response
+                .then()
+                .log().body();
+       int statusCode =  response.statusCode();
+
+      GetUserResponse getUserResponse = response.as(GetUserResponse.class);
+      getUserResponse.setStatusCode(statusCode);
+      return getUserResponse;
     }
 }
