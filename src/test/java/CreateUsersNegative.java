@@ -19,8 +19,10 @@ public class CreateUsersNegative {
     @Test
     public void shouldNotAllowUserToCreateWithInvalidEmail(){
         //Arrange
-        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
-                .gender("female").email("riya.28.com").status("active").build();
+//        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
+//                .gender("female").email("riya.28.com").status("active").build();
+
+        UsersCreateBodyObject requestBodyOb = new UsersCreateBodyObject.Builder().email("tiya.kjbj.com").build();
         //Act
       CreateUserErrorResponse errorResponse = createUsersRequest.createUserExpectingError(requestBodyOb);
 
@@ -33,8 +35,10 @@ public class CreateUsersNegative {
     @Test
     public void shouldNotAllowUserToCreateWithBlankGenderAndStatus(){
         //Arrange
-        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
-                .gender("").email("riya2.28@gmail.com").status("").build();
+//        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
+//                .gender("").email("riya2.28@gmail.com").status("").build();
+
+        UsersCreateBodyObject requestBodyOb = new UsersCreateBodyObject.Builder().gender("").status("").build();
         //Act
         CreateUserErrorResponse errorResponse = createUsersRequest.createUserExpectingError(requestBodyOb);
 

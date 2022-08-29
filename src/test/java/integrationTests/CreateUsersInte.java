@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import java.util.UUID;
 
 public class CreateUsersInte {
-
     private CreateUsersRequest createUsersRequest;
     @BeforeClass
     public void beforeClass(){
@@ -19,10 +18,12 @@ public class CreateUsersInte {
     public void shouldCreateAndGetUser() {
 
         //Arrange
-        String email = String.format("%s@gmail.com", UUID.randomUUID());
+//        String email = String.format("%s@gmail.com", UUID.randomUUID());
+//
+//        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
+//                .gender("male").email(email).status("active").build();
+        UsersCreateBodyObject requestBodyOb = new UsersCreateBodyObject.Builder().build();
 
-        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
-                .gender("male").email(email).status("active").build();
         //Act
         int id = createUsersRequest.CreateUser(requestBodyOb).getData().getId();
 

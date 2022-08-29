@@ -23,10 +23,12 @@ public class CreateUsers {
     public void shouldCreateMaleUser(){
 
         //Arrange
-       String email = String.format("%s@gmail.com",UUID.randomUUID());
+    //   String email = String.format("%s@gmail.com",UUID.randomUUID());
 
-        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
-                .gender("male").email(email).status("active").build();
+      //  UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Tenali RamaKrishna")
+        //        .gender("male").email(email).status("active").build();
+
+       UsersCreateBodyObject requestBodyOb = new UsersCreateBodyObject.Builder().gender("male").build();
         //Act
        CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
 
@@ -36,11 +38,16 @@ public class CreateUsers {
     @Test
     public void shouldCreateFemaleUser() {
 
-        String email = String.format("%s@gmail.com",UUID.randomUUID());
+        //Arrange
+//        String email = String.format("%s@gmail.com",UUID.randomUUID());
+//        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
+//                .gender("female").email(email).status("active").build();
+        UsersCreateBodyObject requestBodyOb = new UsersCreateBodyObject.Builder().gender("female").build();
 
-        UsersCreateBodyObject requestBodyOb = UsersCreateBodyObject.builder().name("Riya")
-                .gender("female").email(email).status("active").build();
+        //Act
         CreateUserResponse createUserResponse = createUsersRequest.CreateUser(requestBodyOb);
+
+        //Assert
         createUserResponse.assertUser(requestBodyOb);
 
     }
